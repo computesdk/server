@@ -1,0 +1,23 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - ../../base
+
+namePrefix: prod-
+
+commonLabels:
+  environment: production
+
+patchesStrategicMerge:
+  - api-patch.yaml
+  - gateway-patch.yaml
+  - sidekick-patch.yaml
+
+images:
+  - name: ghcr.io/computesdk/api
+    newTag: stable
+  - name: ghcr.io/computesdk/gateway
+    newTag: stable
+  - name: ghcr.io/computesdk/sidekick
+    newTag: stable

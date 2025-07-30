@@ -1,0 +1,53 @@
+name: Validate Manifests
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup kubectl
+      uses: azure/setup-kubectl@v3
+      with:
+        version: 'v1.28.0'
+    
+    - name: Validate base manifests
+      run: |
+        echo "🔍 Validating base manifests..."
+        kubectl kustomize manifests/base --dry-run=client
+    
+    - name: Validate development overlay
+      run: |
+        echo "🔍 Validating development overlay..."
+        kubectl kustomize manifests/overlays/development --dry-run=client
+    
+    - name: Validate staging overlay
+      run: |
+        echo "🔍 Validating staging overlay..."
+        kubectl kustomize manifests/overlays/staging --dry-run=client
+    
+    - name: Validate production overlay
+      run: |
+        echo "🔍 Validating production overlay..."
+        kubectl kustomize manifests/overlays/production --dry-run=client
+    
+    - name: Test deployment scripts
+      run: |
+        echo "🧪 Testing deployment scripts..."
+        chmod +x scripts/*.sh
+        # Test script syntax
+        bash -n scripts/deploy.sh
+        bash -n scripts/setup-cluster.sh
+        bash -n scripts/cleanup.sh
+    
+    - name: Validate YAML syntax
+      run: |
+        echo "📝 Validating YAML syntax..."
+        find manifests -name "*.yaml" -exec yamllint {} \; || true

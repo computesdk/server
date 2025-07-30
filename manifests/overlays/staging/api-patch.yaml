@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: computesdk-api
+spec:
+  replicas: 2
+  template:
+    spec:
+      containers:
+        - name: computesdk-api
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "200m"
+            limits:
+              memory: "1Gi"
+              cpu: "1000m"
+          env:
+            - name: LOG_LEVEL
+              value: "info"
+            - name: ENVIRONMENT
+              value: "staging"
