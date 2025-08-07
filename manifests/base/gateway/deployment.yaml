@@ -21,7 +21,7 @@ spec:
           command: ['sh', '-c', 'until nc -z api-service 8080; do echo waiting for api-service; sleep 2; done;']
       containers:
         - name: computesdk-gateway
-          image: ghcr.io/computesdk/gateway:latest
+          image: computesdk/gateway:latest
           ports:
             - containerPort: 8080 # Assuming gateway listens on 8080
           env:

@@ -32,7 +32,7 @@ spec:
               echo "PostgreSQL should be ready now"
       containers:
         - name: computesdk-api
-          image: ghcr.io/computesdk/api:latest
+          image: computesdk/api:latest
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080

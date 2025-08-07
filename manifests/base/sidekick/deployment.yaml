@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: computesdk-sidekick
-          image: ghcr.io/computesdk/sidekick:latest
+          image: computesdk/sidekick:latest
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
