@@ -53,6 +53,25 @@ spec:
                   key: password
             - name: POSTGRES_DATABASE
               value: "computesdk"
+            # License Configuration
+            - name: LICENSE_ENV
+              valueFrom:
+                configMapKeyRef:
+                  name: computesdk-config
+                  key: LICENSE_ENV
+                  optional: true
+            - name: LICENSE_DOMAIN
+              valueFrom:
+                configMapKeyRef:
+                  name: computesdk-config
+                  key: LICENSE_DOMAIN
+                  optional: true
+            - name: LICENSE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: computesdk-secrets
+                  key: LICENSE_KEY
+                  optional: true
           resources:
             requests:
               memory: "256Mi"

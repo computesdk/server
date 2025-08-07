@@ -30,4 +30,23 @@ spec:
               value: "api-service.computesdk-system.svc.cluster.local"
             - name: API_SERVICE_PORT
               value: "8080" # Assuming API service runs on port 8080
+            # License Configuration
+            - name: LICENSE_ENV
+              valueFrom:
+                configMapKeyRef:
+                  name: computesdk-config
+                  key: LICENSE_ENV
+                  optional: true
+            - name: LICENSE_DOMAIN
+              valueFrom:
+                configMapKeyRef:
+                  name: computesdk-config
+                  key: LICENSE_DOMAIN
+                  optional: true
+            - name: LICENSE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: computesdk-secrets
+                  key: LICENSE_KEY
+                  optional: true
           resources:
